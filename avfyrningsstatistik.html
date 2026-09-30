@@ -1,29 +1,32 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="sv">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Avfyrningsstatistik — Skjutvapen Repo</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jämförelser — Skjutvapen Repo</title>
 <style>
 :root{
   --bg:#0b090b;--panel:#171116;--panel2:#211720;--ink:#eee6da;
   --muted:#a99ca1;--line:#3c2b34;--gold:#b58a55;--gold2:#d2b27d;
-  --red:#6e2632;--red2:#9a3b49
+  --red:#6e2632;--red2:#9a3b49;--shadow:0 20px 55px rgba(0,0,0,.45)
 }
 *{box-sizing:border-box}
-a{color:inherit;text-decoration:none}
 body{
-  margin:0;background:radial-gradient(circle at 50% -10%,rgba(110,38,50,.2),transparent 40rem),#0b090b;
+  margin:0;background:
+  radial-gradient(circle at 50% -10%,rgba(110,38,50,.2),transparent 40rem),#0b090b;
   color:var(--ink);font-family:Georgia,"Times New Roman",serif;line-height:1.6
 }
 body:before{
-  content:"";position:fixed;inset:0;pointer-events:none;opacity:.06;
-  background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;
+  background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
   background-size:44px 44px
 }
-.container{width:min(1050px,calc(100% - 36px));margin:auto}
+a{color:inherit;text-decoration:none}
+.container{width:min(1160px,calc(100% - 36px));margin:auto}
+
 .site-header{
-  position:sticky;top:0;z-index:50;background:rgba(11,9,11,.94);
+  position:sticky;top:0;z-index:50;background:rgba(11,9,11,.95);
   border-bottom:1px solid var(--line);backdrop-filter:blur(12px)
 }
 .nav{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}
@@ -35,229 +38,417 @@ body:before{
 .brand-mark span{transform:rotate(-45deg)}
 .nav-links{display:flex;gap:24px;color:var(--muted);font-size:.95rem}
 .nav-links a{color:var(--muted);text-decoration:none}
-.nav-links a:hover,.nav-links a[aria-current=page]{color:var(--gold2)}
-header+main{padding-top:0}
-.hero{text-align:center;padding:70px 0 35px}
+.nav-links a:hover,.nav-links a[aria-current="page"]{color:var(--gold2)}
+
+.page-header{text-align:center;padding:70px 0 40px}
 .eyebrow{color:var(--gold2);font-size:.76rem;letter-spacing:.2em;text-transform:uppercase}
-h1{font-size:clamp(2.7rem,6vw,4.5rem);line-height:1;margin:14px 0}
-.hero p{max-width:680px;margin:auto;color:var(--muted)}
+h1{margin:14px 0 0;font-size:clamp(2.7rem,6vw,4.7rem);line-height:.98}
+.intro{max-width:760px;margin:20px auto 0;color:var(--muted);font-size:1.02rem}
 .ornament{color:var(--gold);margin-top:22px;letter-spacing:.65em}
-.panel{
-  background:linear-gradient(145deg,rgba(33,23,32,.96),rgba(16,11,15,.98));
-  border:1px solid var(--line);box-shadow:0 20px 55px rgba(0,0,0,.45);padding:24px
+
+.comparison-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:20px 0 80px}
+.card{
+  background:linear-gradient(145deg,rgba(33,23,32,.97),rgba(16,11,15,.99));
+  border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden
 }
-.selector-label,.control-label{
-  display:block;color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px
+.card-head{
+  padding:15px 18px;border-bottom:1px solid var(--line);color:var(--gold2);
+  font-size:.75rem;letter-spacing:.18em;text-transform:uppercase
 }
-select,input[type=range]{
-  width:100%
+
+/* Dropdown above the image */
+.selector{position:relative;z-index:20}
+.selector-button{
+  width:100%;display:flex;justify-content:space-between;align-items:center;
+  padding:15px 18px;border:0;border-bottom:1px solid var(--line);
+  background:#100c10;color:var(--ink);font:inherit;text-align:left;cursor:pointer
 }
-select{
-  appearance:none;padding:13px 44px 13px 15px;border:1px solid var(--line);border-radius:4px;
-  background:
-    linear-gradient(45deg,transparent 50%,var(--gold) 50%) calc(100% - 21px) 50%/6px 6px no-repeat,
-    linear-gradient(135deg,var(--gold) 50%,transparent 50%) calc(100% - 15px) 50%/6px 6px no-repeat,
-    #100c10;color:var(--ink);font:inherit;cursor:pointer
+.selector-button:hover{background:#181118}
+.arrow{color:var(--gold);transition:transform .2s}
+.selector.open .arrow{transform:rotate(180deg)}
+.menu{
+  position:absolute;left:0;right:0;top:100%;display:none;max-height:300px;overflow:auto;
+  background:#120e12;border:1px solid var(--gold);border-top:0;box-shadow:0 22px 40px rgba(0,0,0,.7)
 }
-select:focus{outline:1px solid var(--gold)}
-.controls{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px}
-.range-row{display:flex;justify-content:space-between;gap:12px;color:var(--gold2);font-size:.9rem}
-input[type=range]{accent-color:var(--gold);cursor:pointer}
-.visual-grid{display:grid;grid-template-columns:1fr;gap:22px}
-.visual{
-  min-width:0;border:1px solid var(--line);background:#0d0a0d;padding:20px
+.selector.open .menu{display:block}
+.option{
+  width:100%;display:block;padding:13px 17px;border:0;border-bottom:1px solid rgba(60,43,52,.8);
+  background:transparent;color:var(--ink);font:inherit;text-align:left;cursor:pointer
 }
-.visual h2,.info h2{font-size:1.2rem;font-weight:500;color:var(--gold2);margin:0 0 5px}
-.visual p{margin:0 0 14px;color:var(--muted);font-size:.88rem}
-.target-wrap{display:grid;place-items:center;min-height:350px}
-.target{
-  width:min(100%,330px);aspect-ratio:1;border-radius:50%;position:relative;
-  background:
-    radial-gradient(circle,#bcae9f 0 8%,#241b1f 8.4% 18%,#bcae9f 18.5% 28%,#241b1f 28.5% 39%,#bcae9f 39.5% 51%,#241b1f 51.5% 64%,#bcae9f 64.5% 77%,#241b1f 77.5% 100%);
-  border:1px solid #786a61;box-shadow:0 0 0 7px #151014,0 0 0 8px var(--line);
+.option:hover{background:var(--panel2);color:var(--gold2)}
+
+.image{
+  position:relative;aspect-ratio:16/9;background:#0d0a0d;overflow:hidden
 }
-.spread{
-  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  width:var(--spread);height:var(--spread);border-radius:50%;
-  border:2px solid var(--red2);background:rgba(154,59,73,.11);
-  transition:width .25s ease,height .25s ease
+.image img{width:100%;height:100%;object-fit:cover;display:block}
+.image:after{
+  content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(5,3,5,.9))
 }
-.center-dot{
-  position:absolute;left:50%;top:50%;width:8px;height:8px;border-radius:50%;
-  transform:translate(-50%,-50%);background:var(--gold2);box-shadow:0 0 0 4px rgba(181,138,85,.2)
+.image-caption{position:absolute;z-index:2;left:18px;right:18px;bottom:14px}
+.image-name{font-size:1.4rem;font-weight:bold}
+.image-category{color:var(--gold2);font-size:.73rem;letter-spacing:.13em;text-transform:uppercase}
+.image-credit{color:#beb3b8;font-size:.68rem;margin-top:4px}
+
+.content{padding:19px}
+h2{margin:0;font-size:1.55rem}
+.summary{margin:5px 0 17px;color:var(--muted);font-size:.9rem}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.info{
+  background:rgba(255,255,255,.025);border:1px solid var(--line);padding:13px 14px;min-height:84px
 }
-.target-caption{text-align:center;color:var(--muted);font-size:.82rem;margin-top:12px}
-.metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
-.metric{padding:14px;border:1px solid var(--line);background:rgba(23,17,22,.7)}
-.metric-label{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.metric-value{font-size:1.05rem;color:var(--ink);margin-top:3px}
-.info-list{display:grid;gap:11px}
-.info-row{display:grid;grid-template-columns:1fr auto;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
-.info-row:last-child{border-bottom:0}
-.info-row span:first-child{color:var(--muted)}
-.info-row span:last-child{text-align:right;color:var(--ink)}
+.label{font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.value{margin-top:5px;font-size:.96rem}
+.accuracy-title{
+  margin:18px 0 9px;color:var(--gold2);font-size:.82rem;letter-spacing:.14em;text-transform:uppercase
+}
+.accuracy-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.acc{
+  padding:14px;border:1px solid rgba(181,138,85,.25);
+  background:linear-gradient(145deg,rgba(181,138,85,.1),rgba(255,255,255,.02))
+}
+.distance{color:var(--gold2);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase}
+.acc-value{margin-top:5px;font-size:1rem}
+.acc-note{margin-top:5px;color:var(--muted);font-size:.73rem;line-height:1.45}
+.reliability{
+  margin-top:10px;padding:15px;border-left:2px solid var(--red);
+  background:rgba(110,38,50,.08)
+}
+.reliability .value{font-size:.96rem}
+.reliability small{display:block;margin-top:5px;color:var(--muted);font-size:.74rem;line-height:1.45}
+.sources{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);color:var(--muted);font-size:.72rem;line-height:1.55}
+.sources a{color:var(--gold2)}
+.sources a:hover{color:var(--ink)}
+
 .note{
-  margin-top:22px;padding:15px 17px;border-left:2px solid var(--red);
-  color:var(--muted);font-size:.85rem;background:rgba(110,38,50,.08)
+  padding:16px 18px;margin:0 0 80px;border-left:2px solid var(--red);
+  background:rgba(110,38,50,.08);color:var(--muted);font-size:.86rem
 }
-footer{margin-top:80px;border-top:1px solid var(--line);padding:24px;text-align:center;color:var(--muted);font-size:.88rem}
-@media(max-width:760px){
-  .nav{flex-wrap:wrap;padding:14px 0}.nav-links{order:3;width:100%;justify-content:center;gap:17px}
-  .hero{padding-top:50px}.controls,.visual-grid{grid-template-columns:1fr}
-  .target-wrap{min-height:300px}
+footer{border-top:1px solid var(--line);padding:25px;text-align:center;color:var(--muted);font-size:.85rem}
+
+@media(max-width:780px){
+  .nav{flex-wrap:wrap;padding:14px 0}
+  .nav-links{order:3;width:100%;justify-content:center;gap:17px;flex-wrap:wrap}
+  .comparison-grid{grid-template-columns:1fr}
 }
-@media(max-width:480px){
-  .container{width:min(100% - 24px,1050px)}.panel{padding:15px}.metrics{grid-template-columns:1fr}
+@media(max-width:500px){
+  .container{width:min(100% - 24px,1160px)}
+  .info-grid,.accuracy-grid{grid-template-columns:1fr}
 }
-@media(prefers-reduced-motion:reduce){.spread{transition:none}}
 </style>
 </head>
 <body>
 
 <header class="site-header">
   <div class="container nav">
-    <a class="brand" href="index.html" aria-label="Skjutvapen Repo">
+    <a class="brand" href="index.html">
       <span class="brand-mark"><span>✦</span></span>
       <span>Skjutvapen Repo</span>
     </a>
     <nav class="nav-links" aria-label="Huvudnavigation">
       <a href="index.html">Hem</a>
       <a href="vapen.html">Vapen</a>
-      <a href="jamforelser.html">Jämförelser</a>
-      <a href="avfyrningsstatistik.html" aria-current="page">Statistik</a>
+      <a href="jamforelser.html" aria-current="page">Jämförelser</a>
+      <a href="avfyrningsstatistik.html">Statistik</a>
     </nav>
   </div>
 </header>
 
 <main>
-<section class="hero">
-  <div class="container">
-    <div class="eyebrow">Tekniskt jämförelsearkiv</div>
-    <h1>Avfyrningsstatistik</h1>
-    <p>Välj ett vapen och ett avstånd för att utforska statistikens visuella jämförelsefält.</p>
-    <div class="ornament">✦ · ✦ · ✦</div>
-  </div>
-</section>
-
-<section class="container">
-  <div class="panel">
-    <div class="controls">
-      <div>
-        <label class="selector-label" for="weapon">Vapen</label>
-        <select id="weapon">
-          <option value="ak4">AK-4</option>
-          <option value="ak5">AK-5</option>
-          <option value="ak5c">AK-5C</option>
-          <option value="ak12">AK-12</option>
-          <option value="glock17">Glock 17</option>
-          <option value="p88">P 88</option>
-        </select>
-      </div>
-      <div>
-        <label class="control-label" for="distance">Avstånd</label>
-        <div class="range-row"><span>Visat avstånd</span><strong><span id="distanceValue">50</span> m</strong></div>
-        <input id="distance" type="range" min="10" max="500" step="10" value="50">
-      </div>
+  <section class="page-header">
+    <div class="container">
+      <div class="eyebrow">Jämförelsearkiv</div>
+      <h1>Jämför två vapen</h1>
+      <p class="intro">
+        Välj ett vapen i vardera listan. Korten visar bild, vapenkategori, ammunition,
+        verifierade precisionstest där de finns, samt dokumenterade uthållighets- och reliabilityuppgifter.
+      </p>
+      <div class="ornament">✦ · ✦ · ✦</div>
     </div>
+  </section>
 
-    <div class="visual-grid">
-      <section class="visual" aria-live="polite">
-        <h2>Visuell spridningsbild</h2>
-        <p>Cirkeln illustrerar hur ett jämförelsevärde kan visualiseras när avståndet ändras.</p>
-        <div class="target-wrap">
-          <div>
-            <div class="target" aria-label="Schematisk måltavla">
-              <div class="spread" id="spread"></div>
-              <div class="center-dot"></div>
+  <section class="container">
+    <div class="comparison-grid">
+
+      <article class="card" data-card>
+        <div class="card-head">Vapen I</div>
+
+        <div class="selector">
+          <button class="selector-button" type="button" aria-expanded="false">
+            <span class="selected-name">AK-4</span><span class="arrow">▼</span>
+          </button>
+          <div class="menu">
+            <button class="option" data-id="ak4" type="button">AK-4</button>
+            <button class="option" data-id="ak5" type="button">AK-5</button>
+            <button class="option" data-id="ak5c" type="button">AK-5C</button>
+            <button class="option" data-id="ak12" type="button">AK-12</button>
+            <button class="option" data-id="glock17" type="button">Glock 17</button>
+            <button class="option" data-id="p88" type="button">P 88</button>
+          </div>
+        </div>
+
+        <div class="image">
+          <img class="weapon-image" referrerpolicy="no-referrer" decoding="async" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Ak_4_REMO%2C_AM.068393%2C_03_%28cropped%29.jpg" alt="AK-4">
+          <div class="image-caption">
+            <div class="image-name">AK-4</div>
+            <div class="image-category">Automatkarbin</div>
+            <div class="image-credit">Bild: Armémuseum / Wikimedia Commons</div>
+          </div>
+        </div>
+
+        <div class="content">
+          <h2 class="weapon-title">AK-4</h2>
+          <p class="summary weapon-summary"></p>
+
+          <div class="info-grid">
+            <div class="info"><div class="label">Vapenkategori</div><div class="value" data-field="category"></div></div>
+            <div class="info"><div class="label">Skott / patron</div><div class="value" data-field="ammo"></div></div>
+          </div>
+
+          <div class="accuracy-title">Pricksäkerhet / precision</div>
+          <div class="accuracy-grid">
+            <div class="acc">
+              <div class="distance">50 meter</div>
+              <div class="acc-value" data-field="acc50"></div>
+              <div class="acc-note" data-field="acc50note"></div>
             </div>
-            <div class="target-caption">Schematisk visualisering — inte ett uppmätt träffbildsdiagram</div>
+            <div class="acc">
+              <div class="distance">250 meter</div>
+              <div class="acc-value" data-field="acc250"></div>
+              <div class="acc-note" data-field="acc250note"></div>
+            </div>
           </div>
-        </div>
-        <div class="metrics">
-          <div class="metric">
-            <div class="metric-label">Avstånd</div>
-            <div class="metric-value"><span id="metricDistance">50</span> m</div>
-          </div>
-          <div class="metric">
-            <div class="metric-label">Relativ spridning</div>
-            <div class="metric-value"><span id="metricSpread">—</span></div>
-          </div>
-          <div class="metric">
-            <div class="metric-label">Avfyrningsjämnhet</div>
-            <div class="metric-value" id="metricConsistency">—</div>
-          </div>
-          <div class="metric">
-            <div class="metric-label">Rekylgrovhet</div>
-            <div class="metric-value" id="metricRecoil">—</div>
-          </div>
-        </div>
-      </section>
 
-      <section class="visual info">
-        <h2 id="weaponTitle">AK-4</h2>
-        <p id="weaponSummary"></p>
-        <div class="info-list">
-          <div class="info-row"><span>Ammunitionstyp</span><span id="ammo"></span></div>
-          <div class="info-row"><span>Avfyrningsjämnhet</span><span id="consistency"></span></div>
-          <div class="info-row"><span>Rekylgrovhet</span><span id="recoil"></span></div>
-          <div class="info-row"><span>Skottlängd / eldsätt</span><span id="shotLength"></span></div>
-          <div class="info-row"><span>Eldhastighet</span><span id="rate"></span></div>
-          <div class="info-row"><span>Rekylkaraktär</span><span id="impulse"></span></div>
+          <div class="reliability">
+            <div class="label">Reliability / uthållighet</div>
+            <div class="value" data-field="reliability"></div>
+            <small data-field="reliabilityNote"></small>
+          </div>
+
+          <div class="sources">Källor: <span data-field="sources"></span></div>
         </div>
-        <div class="note">
-          Värden som avfyrningsjämnhet och rekylgrovhet är kvalitativa jämförelsefält.
-          Cirkeln är en pedagogisk visualisering av relativ förändring med avståndet,
-          inte en exakt uppmätt ballistisk träffbild.
+      </article>
+
+      <article class="card" data-card>
+        <div class="card-head">Vapen II</div>
+
+        <div class="selector">
+          <button class="selector-button" type="button" aria-expanded="false">
+            <span class="selected-name">AK-5C</span><span class="arrow">▼</span>
+          </button>
+          <div class="menu">
+            <button class="option" data-id="ak4" type="button">AK-4</button>
+            <button class="option" data-id="ak5" type="button">AK-5</button>
+            <button class="option" data-id="ak5c" type="button">AK-5C</button>
+            <button class="option" data-id="ak12" type="button">AK-12</button>
+            <button class="option" data-id="glock17" type="button">Glock 17</button>
+            <button class="option" data-id="p88" type="button">P 88</button>
+          </div>
         </div>
-      </section>
+
+        <div class="image">
+          <img class="weapon-image" referrerpolicy="no-referrer" decoding="async" src="https://upload.wikimedia.org/wikipedia/commons/3/3e/AK5Cesar.JPG" alt="AK-5C">
+          <div class="image-caption">
+            <div class="image-name">AK-5C</div>
+            <div class="image-category">Automatkarbin</div>
+            <div class="image-credit">Bild: Wikimedia Commons</div>
+          </div>
+        </div>
+
+        <div class="content">
+          <h2 class="weapon-title">AK-5C</h2>
+          <p class="summary weapon-summary"></p>
+
+          <div class="info-grid">
+            <div class="info"><div class="label">Vapenkategori</div><div class="value" data-field="category"></div></div>
+            <div class="info"><div class="label">Skott / patron</div><div class="value" data-field="ammo"></div></div>
+          </div>
+
+          <div class="accuracy-title">Pricksäkerhet / precision</div>
+          <div class="accuracy-grid">
+            <div class="acc">
+              <div class="distance">50 meter</div>
+              <div class="acc-value" data-field="acc50"></div>
+              <div class="acc-note" data-field="acc50note"></div>
+            </div>
+            <div class="acc">
+              <div class="distance">250 meter</div>
+              <div class="acc-value" data-field="acc250"></div>
+              <div class="acc-note" data-field="acc250note"></div>
+            </div>
+          </div>
+
+          <div class="reliability">
+            <div class="label">Reliability / uthållighet</div>
+            <div class="value" data-field="reliability"></div>
+            <small data-field="reliabilityNote"></small>
+          </div>
+
+          <div class="sources">Källor: <span data-field="sources"></span></div>
+        </div>
+      </article>
+
     </div>
-  </div>
-</section>
+
+    <div class="note">
+      <strong>Så ska uppgifterna läsas:</strong> en siffra från ett enskilt test är inte samma sak som ett garanterat fabriksvärde.
+      För 50 m och 250 m visas därför endast direkta eller tydligt dokumenterade uppgifter; där ett sådant test inte kunde verifieras står det uttryckligen.
+      Reliability anges som dokumenterad uthållighet eller stoppfrekvens från ett test när sådan uppgift finns — inte som ett löfte om exakt livslängd för varje exemplar.
+    </div>
+  </section>
 </main>
 
-<footer>Avfyrningsstatistik · Skjutvapen Repo</footer>
+<footer>Jämförelser · Skjutvapen Repo</footer>
 
 <script>
-const data={
-  ak4:{name:"AK-4",ammo:"7,62 × 51 mm NATO",consistency:"Medel",recoil:"Kraftig",shotLength:"Enskilda skott eller korta serier",rate:"ca 40 skott/min praktisk",impulse:"Tydlig och kraftigare rekylimpuls",spread:1.05,summary:"Tyngre kaliber med mer märkbar rekyl än de mindre kalibrarna i jämförelsen."},
-  ak5:{name:"AK-5",ammo:"5,56 × 45 mm NATO",consistency:"Medel–hög",recoil:"Måttlig",shotLength:"Enskilda skott eller korta serier",rate:"ca 40 skott/min praktisk",impulse:"Måttlig rekylimpuls",spread:.78,summary:"5,56 mm-plattform med lägre relativ rekyl än AK-4."},
-  ak5c:{name:"AK-5C",ammo:"5,56 × 45 mm NATO",consistency:"Medel–hög",recoil:"Måttlig",shotLength:"Enskilda skott eller korta serier",rate:"ca 40 skott/min praktisk",impulse:"Måttlig rekylimpuls",spread:.8,summary:"Kompakt AK-5-variant med samma grundkaliber."},
-  ak12:{name:"AK-12",ammo:"5,45 × 39 mm",consistency:"Medel",recoil:"Måttlig",shotLength:"Enskilda skott eller serier beroende på eldläge",rate:"ca 700 skott/min teknisk",impulse:"Relativt lättare än 7,62 × 51 mm",spread:.82,summary:"5,45 mm-plattform med hög teknisk eldhastighet."},
-  glock17:{name:"Glock 17",ammo:"9 × 19 mm Parabellum",consistency:"Skyttberoende",recoil:"Måttlig",shotLength:"Enskilda skott",rate:"Skyttberoende",impulse:"Kort och tydlig rekylimpuls",spread:.62,summary:"Pistolplattform i 9 × 19 mm."},
-  p88:{name:"P 88",ammo:"9 × 19 mm Parabellum",consistency:"Skyttberoende",recoil:"Måttlig",shotLength:"Enskilda skott",rate:"Skyttberoende",impulse:"Kort och tydlig rekylimpuls",spread:.65,summary:"Pistolplattform i 9 × 19 mm."}
+const weapons={
+  ak4:{
+    name:"AK-4",
+    category:"Automatkarbin",
+    ammo:"7,62 × 51 mm NATO",
+    image:"https://upload.wikimedia.org/wikipedia/commons/2/2d/Ak_4_REMO%2C_AM.068393%2C_03_%28cropped%29.jpg",
+    credit:"Bild: Armémuseum / Wikimedia Commons",
+    summary:"Svensk G3-baserad automatkarbin.",
+    acc50:"Ej verifierat",
+    acc50note:"Ingen direkt, jämförbar 50 m-grupp används här.",
+    acc250:"Ej verifierat",
+    acc250note:"Ingen direkt 250 m-grupp verifierad i underlaget.",
+    reliability:"15 000 skott som service-livslängdsmål",
+    reliabilityNote:"Beskrivet som ett svenskt/HK-avtalat mål för AK-4-systemet; det är inte samma sak som att vapnet garanterat går sönder efter 15 000 skott.",
+    sources:'<a href="https://sv.wikipedia.org/wiki/Automatkarbin_4" target="_blank" rel="noopener">Wikipedia: Automatkarbin 4</a> · <a href="https://www.valeorine.com/reference/ak-4-rifle" target="_blank" rel="noopener">Valéorine: AK-4</a>'
+  },
+  ak5:{
+    name:"AK-5",
+    category:"Automatkarbin",
+    ammo:"5,56 × 45 mm NATO",
+    image:"https://upload.wikimedia.org/wikipedia/commons/a/aa/Automatkarbin_5.jpg",
+    credit:"Bild: Wikimedia Commons",
+    summary:"Svensk automatkarbin baserad på FN FNC.",
+    acc50:"≈ 25 mm",
+    acc50note:"Ett publicerat test av en militär AK-5 redovisade 0,99-tums femskottsgrupper vid 50 m. Det motsvarar cirka 25 mm och är ett testresultat, inte ett universellt fabriksvärde.",
+    acc250:"Ej direkt mätt",
+    acc250note:"Samma publicerade test genomfördes vid 50 m, inte 250 m.",
+    reliability:"≈ 1 stopp per 25 000 skott",
+    reliabilityNote:"Detta är en historisk prov-/kravuppgift för AK-5, inte en förutsägelse om när ett individuellt exemplar går sönder.",
+    sources:'<a href="https://www.gunsandammo.com/editorial/ak5-swedens-service-rifle/553969" target="_blank" rel="noopener">Guns & Ammo: AK-5</a> · <a href="https://www.ar15.com/forums/t_1_5/505912_Very_Interesting_Story_On_Sweden_s_AK5_FNC_variant_.html" target="_blank" rel="noopener">Dokumenterad återgivning av AK-5-försök</a>'
+  },
+  ak5c:{
+    name:"AK-5C",
+    category:"Automatkarbin",
+    ammo:"5,56 × 45 mm NATO",
+    image:"https://upload.wikimedia.org/wikipedia/commons/3/3e/AK5Cesar.JPG",
+    credit:"Bild: Wikimedia Commons",
+    summary:"Moderniserad och mer kompakt AK-5-variant.",
+    acc50:"Ej verifierat",
+    acc50note:"Ingen jämförbar direkt 50 m-grupp verifierad i underlaget.",
+    acc250:"Ej verifierat",
+    acc250note:"Ingen jämförbar direkt 250 m-grupp verifierad i underlaget.",
+    reliability:"MRBS ≈ 3 500",
+    reliabilityNote:"I ett större AK-5C-försök där över en miljon skott avfyrades rapporterades Mean Rounds Between Stoppage på cirka 3 500. Det är ett mått på stoppfrekvens, inte total livslängd.",
+    sources:'<a href="https://wiki.arcsnet.dev/content/wikipedia_en_all_maxi_2026-02/Automatkarbin_5" target="_blank" rel="noopener">AK-5C: försöksdata</a> · <a href="https://ipfs.ssi.eecc.de/ipfs/QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco/wiki/Ak_5.html" target="_blank" rel="noopener">AK-5 historik</a>'
+  },
+  ak12:{
+    name:"AK-12",
+    category:"Automatkarbin / automatgevär",
+    ammo:"5,45 × 39 mm",
+    image:"https://upload.wikimedia.org/wikipedia/commons/c/c9/AK-12_Assault_Rifle_Army-2022_2022-08-20_2384.jpg",
+    credit:"Bild: Wikimedia Commons",
+    summary:"Rysk automatkarbin i 5,45 × 39 mm.",
+    acc50:"Ej verifierat",
+    acc50note:"Ingen jämförbar direkt 50 m-grupp verifierad i underlaget.",
+    acc250:"Ej verifierat",
+    acc250note:"Ingen jämförbar direkt 250 m-grupp verifierad i underlaget.",
+    reliability:"Ingen standardiserad publik livslängdssiffra",
+    reliabilityNote:"Ett separat publicerat prov rapporterade 600 skott utan malfunktion, men det är inte ett livslängdstest och ska inte läsas som en garantisiffra.",
+    sources:'<a href="https://www.recoilweb.com/ak-12-review-184542.html" target="_blank" rel="noopener">RECOIL: AK-12 test</a> · <a href="https://www.gotavapen.se/gota/gotavapenhist/skrifter/2019max/ak_v1.pdf" target="_blank" rel="noopener">Göta vapen: AK-historik</a>'
+  },
+  glock17:{
+    name:"Glock 17",
+    category:"Halvautomatisk pistol",
+    ammo:"9 × 19 mm Parabellum",
+    image:"https://upload.wikimedia.org/wikipedia/commons/9/95/Glock_17_2nd_Gen.jpg",
+    credit:"Bild: Wikimedia Commons",
+    summary:"Halvautomatisk pistol i 9 × 19 mm.",
+    acc50:"Ej verifierat",
+    acc50note:"Publicerade uthållighetstester innehåller 25 yd-grupper; här görs ingen extrapolering till 50 m.",
+    acc250:"Ej verifierat / ej relevant",
+    acc250note:"Ingen direkt 250 m-precision verifierad i underlaget.",
+    reliability:"71 260 skott i uthållighetstest",
+    reliabilityNote:"Ett Gen4-test nådde 71 260 skott med 19 stopp och 3 dokumenterade delbrott innan testet avslutades. Ett annat historiskt test nådde 100 000 skott. Det är testresultat, inte garanterad livslängd.",
+    sources:'<a href="https://pistol-training.com/glock-17-gen4-endurance-test-month-16/" target="_blank" rel="noopener">Pistol-Training: G17 endurance test</a> · <a href="https://www.glocknut.com/chuck-taylor/1995-chuck-taylor-glock-test" target="_blank" rel="noopener">Chuck Taylor: 100 000-skotts test</a>'
+  },
+  p88:{
+    name:"P 88",
+    category:"Halvautomatisk pistol",
+    ammo:"9 × 19 mm Parabellum",
+    image:"https://upload.wikimedia.org/wikipedia/commons/0/05/Walther_P88.jpg",
+    credit:"Bild: Wikimedia Commons",
+    summary:"Tysk halvautomatisk pistol i 9 × 19 mm.",
+    acc50:"Ej verifierat",
+    acc50note:"Publika tester finns vid kortare avstånd, men ingen jämförbar direkt 50 m-grupp verifierades.",
+    acc250:"Ej verifierat / ej relevant",
+    acc250note:"Ingen direkt 250 m-precision verifierad i underlaget.",
+    reliability:"7 000 skott i ett hårt prov — ramproblem rapporterades",
+    reliabilityNote:"I den amerikanska XM9-prövningen rapporterades att P88 fick sprickor i ramen efter cirka 7 000 skott i ett testmoment. Detta ska inte tolkas som en generell livslängdsgräns för alla P88.",
+    sources:'<a href="https://combatoperators.com/firearms/pistols/walther-p88/" target="_blank" rel="noopener">Combat Operators: Walther P88</a> · <a href="https://en.wikipedia.org/wiki/Walther_P88" target="_blank" rel="noopener">Wikipedia: Walther P88</a>'
+  }
 };
 
-const weapon=document.getElementById("weapon");
-const distance=document.getElementById("distance");
-const spread=document.getElementById("spread");
-const distanceValue=document.getElementById("distanceValue");
-const metricDistance=document.getElementById("metricDistance");
-const metricSpread=document.getElementById("metricSpread");
+function render(card,id){
+  const d=weapons[id];
+  card.querySelector(".selected-name").textContent=d.name;
+  card.querySelector(".weapon-title").textContent=d.name;
+  card.querySelector(".weapon-summary").textContent=d.summary;
 
-function update(){
-  const d=data[weapon.value];
-  const meters=Math.max(10,Math.min(500,Number(distance.value)||50));
-  const normalized=meters/50;
-  const relative=Math.min(100,Math.max(8,d.spread*normalized*22));
-  const circleSize=Math.min(88,Math.max(13,relative));
-  spread.style.setProperty("--spread",circleSize+"%");
-  distanceValue.textContent=meters;
-  metricDistance.textContent=meters+" m";
-  metricSpread.textContent=Math.round(relative)+" % relativ storlek";
-  document.getElementById("metricConsistency").textContent=d.consistency;
-  document.getElementById("metricRecoil").textContent=d.recoil;
-  document.getElementById("weaponTitle").textContent=d.name;
-  document.getElementById("weaponSummary").textContent=d.summary;
-  document.getElementById("ammo").textContent=d.ammo;
-  document.getElementById("consistency").textContent=d.consistency;
-  document.getElementById("recoil").textContent=d.recoil;
-  document.getElementById("shotLength").textContent=d.shotLength;
-  document.getElementById("rate").textContent=d.rate;
-  document.getElementById("impulse").textContent=d.impulse;
+  const img=card.querySelector(".weapon-image");
+  img.src=d.image; img.alt=d.name;
+  card.querySelector(".image-name").textContent=d.name;
+  card.querySelector(".image-category").textContent=d.category;
+  card.querySelector(".image-credit").textContent=d.credit;
+
+  card.querySelector('[data-field="category"]').textContent=d.category;
+  card.querySelector('[data-field="ammo"]').textContent=d.ammo;
+  card.querySelector('[data-field="acc50"]').textContent=d.acc50;
+  card.querySelector('[data-field="acc50note"]').textContent=d.acc50note;
+  card.querySelector('[data-field="acc250"]').textContent=d.acc250;
+  card.querySelector('[data-field="acc250note"]').textContent=d.acc250note;
+  card.querySelector('[data-field="reliability"]').textContent=d.reliability;
+  card.querySelector('[data-field="reliabilityNote"]').textContent=d.reliabilityNote;
+  card.querySelector('[data-field="sources"]').innerHTML=d.sources;
 }
-weapon.addEventListener("change",update);
-distance.addEventListener("input",update);
-update();
+
+document.querySelectorAll("[data-card]").forEach((card,index)=>{
+  const selector=card.querySelector(".selector");
+  const button=card.querySelector(".selector-button");
+
+  button.addEventListener("click",(e)=>{
+    e.stopPropagation();
+    document.querySelectorAll(".selector").forEach(other=>{
+      if(other!==selector){
+        other.classList.remove("open");
+        other.querySelector(".selector-button").setAttribute("aria-expanded","false");
+      }
+    });
+    const open=selector.classList.toggle("open");
+    button.setAttribute("aria-expanded",String(open));
+  });
+
+  selector.querySelectorAll(".option").forEach(option=>{
+    option.addEventListener("click",()=>{
+      render(card,option.dataset.id);
+      selector.classList.remove("open");
+      button.setAttribute("aria-expanded","false");
+    });
+  });
+
+  render(card,index===0 ? "ak4" : "ak5c");
+});
+
+document.addEventListener("click",()=>{
+  document.querySelectorAll(".selector").forEach(s=>{
+    s.classList.remove("open");
+    s.querySelector(".selector-button").setAttribute("aria-expanded","false");
+  });
+});
 </script>
 </body>
 </html>
