@@ -367,9 +367,16 @@ footer {
 
   <select id="ammoSelect">
     <option value="762">7,62 × 51 mm NATO</option>
+    <option value="76239">7,62 × 39 mm</option>
     <option value="556">5,56 × 45 mm NATO</option>
+    <option value="556civil">5,56 × 45 mm</option>
+    <option value="223">.223 Remington</option>
     <option value="545">5,45 × 39 mm</option>
     <option value="9mm">9 × 19 mm Parabellum</option>
+    <option value="45">.45 ACP</option>
+    <option value="765">7,65 × 21 mm Parabellum</option>
+    <option value="76225">7,62 × 25 mm Tokarev</option>
+    <option value="380">.380 ACP (9 mm Browning Kort)</option>
   </select>
 
   <div class="ammo-display">
@@ -431,9 +438,24 @@ footer {
       <span>AK-4</span>
     </button>
 
+    <button class="catalog-item" data-ammo="76239">
+      <strong>7,62 × 39 mm</strong>
+      <span>Ingen modell angiven</span>
+    </button>
+
     <button class="catalog-item" data-ammo="556">
       <strong>5,56 × 45 mm NATO</strong>
       <span>AK-5 · AK-5C</span>
+    </button>
+
+    <button class="catalog-item" data-ammo="556civil">
+      <strong>5,56 × 45 mm</strong>
+      <span>Ingen modell angiven</span>
+    </button>
+
+    <button class="catalog-item" data-ammo="223">
+      <strong>.223 Remington</strong>
+      <span>Ingen modell angiven</span>
     </button>
 
     <button class="catalog-item" data-ammo="545">
@@ -444,6 +466,26 @@ footer {
     <button class="catalog-item" data-ammo="9mm">
       <strong>9 × 19 mm Parabellum</strong>
       <span>Glock 17 · P 88</span>
+    </button>
+
+    <button class="catalog-item" data-ammo="45">
+      <strong>.45 ACP</strong>
+      <span>Ingen modell angiven</span>
+    </button>
+
+    <button class="catalog-item" data-ammo="765">
+      <strong>7,65 × 21 mm Parabellum</strong>
+      <span>Ingen modell angiven</span>
+    </button>
+
+    <button class="catalog-item" data-ammo="76225">
+      <strong>7,62 × 25 mm Tokarev</strong>
+      <span>Ingen modell angiven</span>
+    </button>
+
+    <button class="catalog-item" data-ammo="380">
+      <strong>.380 ACP</strong>
+      <span>9 mm Browning Kort</span>
     </button>
 
   </div>
@@ -463,8 +505,7 @@ const ammunition = {
   "762": {
     title:"7,62 × 51 mm NATO",
     caliber:"7,62 mm",
-    description:
-      "En militär standardiserad gevärspatron som förekommer i AK-4 i vapenkatalogen.",
+    description:"En standardiserad militär gevärspatron.",
     family:"7,62 mm",
     category:"Gevärsammunition",
     casing:"Flaskformad metallhylsa",
@@ -472,11 +513,21 @@ const ammunition = {
     weapons:["AK-4"]
   },
 
+  "76239": {
+    title:"7,62 × 39 mm",
+    caliber:"7,62 mm",
+    description:"En gevärspatron med ursprung i Sovjetunionen.",
+    family:"7,62 mm",
+    category:"Gevärsammunition",
+    casing:"Flaskformad metallhylsa",
+    reference:"Sovjetisk standard",
+    weapons:[]
+  },
+
   "556": {
     title:"5,56 × 45 mm NATO",
     caliber:"5,56 mm",
-    description:
-      "En standardiserad gevärspatron som används av AK-5 och AK-5C i katalogen.",
+    description:"En standardiserad militär gevärspatron.",
     family:"5,56 mm",
     category:"Gevärsammunition",
     casing:"Flaskformad metallhylsa",
@@ -484,11 +535,32 @@ const ammunition = {
     weapons:["AK-5","AK-5C"]
   },
 
+  "556civil": {
+    title:"5,56 × 45 mm",
+    caliber:"5,56 mm",
+    description:"En gevärspatron som förekommer i både civila och militära sammanhang.",
+    family:"5,56 mm",
+    category:"Gevärsammunition",
+    casing:"Flaskformad metallhylsa",
+    reference:"5,56 mm-familjen",
+    weapons:[]
+  },
+
+  "223": {
+    title:".223 Remington",
+    caliber:"5,56 mm",
+    description:"En vanlig gevärspatron inom civil skytteverksamhet.",
+    family:"5,56 mm",
+    category:"Gevärsammunition",
+    casing:"Flaskformad metallhylsa",
+    reference:"Remington-standard",
+    weapons:[]
+  },
+
   "545": {
     title:"5,45 × 39 mm",
     caliber:"5,45 mm",
-    description:
-      "En gevärspatron som förekommer i AK-12 enligt vapenkatalogens uppgifter.",
+    description:"En gevärspatron med sovjetiskt ursprung.",
     family:"5,45 mm",
     category:"Gevärsammunition",
     casing:"Flaskformad metallhylsa",
@@ -499,13 +571,56 @@ const ammunition = {
   "9mm": {
     title:"9 × 19 mm Parabellum",
     caliber:"9 mm",
-    description:
-      "En vanligt förekommande pistolpatron som används av Glock 17 och P 88 i katalogen.",
+    description:"En av världens vanligaste pistolpatroner.",
     family:"9 mm",
     category:"Pistolammunition",
     casing:"Rak metallhylsa",
     reference:"Internationell standard",
     weapons:["Glock 17","P 88"]
+  },
+
+  "45": {
+    title:".45 ACP",
+    caliber:"11,43 mm",
+    description:"En pistolpatron med amerikanskt ursprung.",
+    family:".45",
+    category:"Pistolammunition",
+    casing:"Rak metallhylsa",
+    reference:"John Browning",
+    weapons:[]
+  },
+
+  "765": {
+    title:"7,65 × 21 mm Parabellum",
+    caliber:"7,65 mm",
+    description:"En äldre pistolpatron som även kallas 7,65 mm Luger.",
+    family:"7,65 mm",
+    category:"Pistolammunition",
+    casing:"Rak metallhylsa",
+    reference:"Parabellum",
+    weapons:[]
+  },
+
+  "76225": {
+    title:"7,62 × 25 mm Tokarev",
+    caliber:"7,62 mm",
+    description:"En pistolpatron med sovjetiskt ursprung.",
+    family:"7,62 mm",
+    category:"Pistolammunition",
+    casing:"Flaskformad metallhylsa",
+    reference:"Sovjetisk standard",
+    weapons:[]
+  },
+
+  "380": {
+    title:".380 ACP (9 mm Browning Kort)",
+    caliber:"9 mm",
+    description:"En kompakt pistolpatron som även kallas 9 mm Browning Kort.",
+    family:"9 mm",
+    category:"Pistolammunition",
+    casing:"Rak metallhylsa",
+    reference:"John Browning",
+    weapons:[]
   }
 
 };
@@ -527,17 +642,24 @@ function showAmmo(key) {
   const weaponList = document.getElementById("weaponList");
   weaponList.replaceChildren();
 
-  ammo.weapons.forEach(weapon => {
+  if (ammo.weapons.length === 0) {
     const tag = document.createElement("div");
     tag.className = "weapon-tag";
-    tag.textContent = weapon;
+    tag.textContent = "Ingen modell angiven";
     weaponList.appendChild(tag);
-  });
+  } else {
+    ammo.weapons.forEach(weapon => {
+      const tag = document.createElement("div");
+      tag.className = "weapon-tag";
+      tag.textContent = weapon;
+      weaponList.appendChild(tag);
+    });
+  }
 
   select.value = key;
 
   document.querySelectorAll(".catalog-item").forEach(item => {
-    item.classList.toggle("active",item.dataset.ammo === key);
+    item.classList.toggle("active", item.dataset.ammo === key);
   });
 }
 
