@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vapenfamiljer — Skjutvapen Repo</title>
+<style>
+:root{
+  --bg:#0b090b;--panel:#171116;--panel2:#211720;--ink:#eee6da;
+  --muted:#aa9da2;--line:#3c2b34;--gold:#b58a55;--gold2:#d2b27d;
+  --red:#6e2632;--red2:#91404a;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;color:var(--ink);line-height:1.65;
+  font-family:Georgia,"Times New Roman",serif;
+  background:radial-gradient(circle at 50% -10%,rgba(110,38,50,.2),transparent 40rem),#0b090b;
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.055;
+  background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+  background-size:44px 44px;
+}
+a{color:inherit;text-decoration:none}
+.container{width:min(1120px,calc(100% - 36px));margin:auto}
+.site-header{position:sticky;top:0;z-index:10;background:rgba(11,9,11,.94);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+.nav{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:flex;align-items:center;gap:12px;font-size:1.05rem;font-weight:bold;letter-spacing:.12em;text-transform:uppercase}
+.brand-mark{width:35px;height:35px;display:grid;place-items:center;border:1px solid var(--gold);color:var(--gold2);transform:rotate(45deg)}
+.brand-mark span{transform:rotate(-45deg)}
+.nav-links{display:flex;gap:24px;flex-wrap:wrap;color:var(--muted);font-size:.95rem}
+.nav-links a:hover,.nav-links a[aria-current=page]{color:var(--gold2)}
+.hero{text-align:center;padding:70px 0 38px}
+.eyebrow{color:var(--gold2);font-size:.76rem;letter-spacing:.2em;text-transform:uppercase}
+h1{font-size:clamp(2.6rem,6vw,4.5rem);line-height:1;margin:14px 0}
+.hero p{max-width:720px;margin:20px auto 0;color:var(--muted)}
+.ornament{color:var(--gold);margin-top:22px;letter-spacing:.65em}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:0 0 22px;flex-wrap:wrap}
+.toolbar p{margin:0;color:var(--muted);font-size:.9rem}
+input,select{font:inherit;color:var(--ink);background:#100c10;border:1px solid var(--line);border-radius:4px;padding:11px 13px}
+input{min-width:min(280px,100%)}
+input:focus,select:focus{outline:1px solid var(--gold)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;padding-bottom:80px}
+.card{background:linear-gradient(145deg,rgba(33,23,32,.96),rgba(16,11,15,.98));border:1px solid var(--line);box-shadow:0 18px 48px rgba(0,0,0,.38);padding:21px;min-width:0}
+.card-top{display:flex;justify-content:space-between;align-items:start;gap:12px;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:15px}
+.card h2{margin:0;color:var(--gold2);font-size:1.35rem;font-weight:500}
+.tag{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold2);border:1px solid var(--line);padding:4px 8px;white-space:nowrap}
+.meta{color:var(--muted);font-size:.9rem;margin:0 0 12px}
+.description{margin:0;color:var(--ink)}
+.details{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:17px}
+.detail{background:rgba(9,7,9,.5);border:1px solid var(--line);padding:11px 12px}
+.detail span{display:block;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em}
+.detail strong{display:block;font-weight:500;margin-top:3px}
+.notice{margin:0 0 28px;padding:15px 18px;border-left:2px solid var(--red2);background:rgba(110,38,50,.09);color:var(--muted);font-size:.88rem}
+.empty{grid-column:1/-1;padding:30px;text-align:center;color:var(--muted);border:1px dashed var(--line)}
+footer{border-top:1px solid var(--line);padding:24px;text-align:center;color:var(--muted);font-size:.88rem}
+@media(max-width:720px){.nav{padding:13px 0;flex-wrap:wrap}.nav-links{width:100%;gap:16px}.grid{grid-template-columns:1fr}.hero{padding-top:50px}.toolbar{align-items:stretch}input{width:100%}}
+
+.model-heading{margin:22px 0 9px;color:var(--gold2);font-size:1rem;font-weight:500;letter-spacing:.04em}
+.model-list{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.model-list li{display:block;padding:0;background:rgba(9,7,9,.42);border:1px solid var(--line)}
+.model-details{width:100%}
+.model-details summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 13px;cursor:pointer}
+.model-details summary::-webkit-details-marker{display:none}
+.model-details summary:focus-visible{outline:1px solid var(--gold2);outline-offset:2px}
+.model-summary-text{display:grid;grid-template-columns:minmax(100px,.55fr) 1.6fr;align-items:center;gap:12px;min-width:0}
+.model-list strong{color:var(--gold2);font-weight:500}
+.model-teaser{color:var(--muted);font-size:.9rem}
+.expand-arrow{flex:0 0 9px;width:9px;height:9px;border-right:1.5px solid var(--gold2);border-bottom:1.5px solid var(--gold2);transform:rotate(45deg) translateY(-2px);transition:transform .18s ease}
+.model-details[open] .expand-arrow{transform:rotate(225deg) translate(-2px,-1px)}
+.model-more{padding:0 14px 13px 14px;border-top:1px solid rgba(60,43,52,.7);margin:0 12px}
+.model-more p{margin:10px 0 0;color:var(--ink);font-size:.92rem}
+@media(max-width:520px){.model-details summary{padding:11px}.model-summary-text{grid-template-columns:1fr;gap:2px}.model-more{margin:0 10px;padding:0 2px 11px}}
+
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="index.html" aria-label="Skjutvapen Repo startsida">
+      <span class="brand-mark"><span>✦</span></span><span>Skjutvapen Repo</span>
+    </a>
+    <nav class="nav-links" aria-label="Huvudnavigation">
+      <a href="index.html">Hem</a>
+      <a href="vapen.html">Vapen</a>
+      <a href="jamforelser.html">Jämförelser</a>
+      <a href="avfyrningsstatistik.html">Statistik</a>
+      <a href="vanligaste-vapen.html" aria-current="page">Vapenfamiljer</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <div class="eyebrow">Översikt · Internationell spridning</div>
+    <h1>Vapenfamiljer</h1>
+    <p>En översikt över vapensystem som ofta förekommer i historiska sammanhang,
+       militär utrustning och offentligt tillgängliga referenskällor.</p>
+    <div class="ornament">✦ · ✦ · ✦</div>
+  </section>
+
+  <div class="notice">
+    <strong>Om urvalet:</strong> Detta är ett urval av välkända modeller, inte en verifierad global topplista
+    eller en exakt rangordning. Modellerna är grupperade i fyra breda familjer. Förekomst varierar mellan
+    länder, tidsperioder och användningsområden. Korten innehåller allmän historisk
+    och kategoribaserad information, inte instruktioner för användning.
+  </div>
+
+  <div class="toolbar">
+    <p id="resultCount">Visar 4 familjer</p>
+    <input id="search" type="search" placeholder="Sök efter vapennamn eller kategori…" aria-label="Sök vapen">
+  </div>
+
+  <section class="grid" id="weaponGrid" aria-label="Vapenfamiljer">
+    <article class="card family-card" data-search="ak-familjen ak-47 · akm · ak-74 · ak-100-serien · ak-12">
+      <div class="card-top"><h2>AK-familjen</h2><span class="tag">Familjeöversikt</span></div>
+      <p class="meta">Exempel: AK-47 · AKM · AK-74 · AK-100-serien · AK-12</p>
+      <p class="description">AK-familjen har sitt ursprung i Sovjetunionen under åren efter andra världskriget och förknippas framför allt med den sovjetiske konstruktören Michail Kalasjnikov. Familjen blev en av 1900-talets mest igenkända grupper av militära automatkarbiner. Under årtiondena har den utvecklats i flera generationer och tillverkats i många länder, både genom licensproduktion och egna nationella varianter. Därför kan beteckningen AK syfta på modeller med tydliga släktband men också på versioner som skiljer sig åt i utformning och historisk bakgrund. AK-47 är en del av familjen och har därför ingen separat familjepost här.</p>
+      <div class="details">
+        <div class="detail"><span>Geografiskt ursprung</span><strong>Sovjetunionen / Ryssland</strong></div>
+        <div class="detail"><span>Historisk period</span><strong>Kalla kriget och senare tid</strong></div>
+      </div>
+      <h3 class="model-heading">Modeller i urvalet</h3>
+      <ul class="model-list"><li class="model-entry"><details class="model-details"><summary><span class="model-summary-text"><strong>AK-47</strong><span class="model-teaser">Tidiga sovjetiska modellen som gav familjen dess internationella genomslag.</span></span><span class="expand-arrow" aria-hidden="true"></span></summary><div class="model-more"><p>Den ursprungliga modellbeteckningen för den tidiga sovjetiska konstruktionen. Den fick stor symbolisk betydelse under kalla kriget och kom att påverka hur automatkarbiner skildrades i nyhetsrapportering, film och militärhistoria.</p></div></details></li><li class="model-entry"><details class="model-details"><summary><span class="model-summary-text"><strong>AKM</strong><span class="model-teaser">Moderniserad efterföljare från 1950-talet med stor internationell spridning.</span></span><span class="expand-arrow" aria-hidden="true"></span></summary><div class="model-more"><p>En moderniserad sovjetisk efterföljare från 1950-talet. Den blev mycket spridd internationellt och kom att representera AK-familjen i många historiska konflikter och i ett stort antal länders militära materielhistoria.</p></div></details></li><li class="model-entry"><details class="model-details"><summary><span class="model-summary-text"><strong>AK-74</strong><span class="model-teaser">En senare sovjetisk generation från 1970-talet.</span></span><span class="expand-arrow" aria-hidden="true"></span></summary><div class="model-more"><p>En senare generation som introducerades under 1970-talet. Den markerade ett nytt skede i familjens utveckling och blev en viktig del av Sovjetunionens militära utrustning under den senare delen av kalla kriget.</p></div></details></li><li class="model-entry"><details class="model-details"><summary><span class="model-summary-text"><strong>AK-101</strong><span class="model-teaser">En modell ur den ryska AK-100-serien efter kalla kriget.</span></span><span class="expand-arrow" aria-hidden="true"></span></summary><div class="model-more"><p>En modell ur AK-100-serien, som utvecklades efter Sovjetunionens upplösning. Serien visar hur den äldre Kalasjnikovtraditionen fördes vidare in i en ny rysk och internationell marknad.</p></div></details></li><li class="model-entry"><details class="model-details"><summary><span class="model-summary-text"><strong>AK-12</strong><span class="model-teaser">En modernare rysk modell i Kalasjnikovtraditionen.</span></span><span class="expand-arrow" aria-hidden="true"></span></summary><div class="model-more"><p>En modern rysk modell som förts in i landets senare militära utrustningshistoria. Den representerar ett försök att föra AK-beteckningen vidare till en ny generation av materiel.</p></div></details></li></ul>
+    </article>
+
+    <article class="card family-card" data-search="m4-familjen m16a1 · m16a2 · m16a4 · m4 · m4a1">
+      <div class="card-top"><h2>M4-familjen</h2><span class="tag">Familjeöversikt</span></div>
+      <p class="meta">Exempel: M16A1 · M16A2 · M16A4 · M4 · M4A1</p>
+      <p class="description">M16- och M4-serierna har sitt ursprung i amerikansk vapentillverkning under 1950-talet och blev särskilt betydelsefulla från Vietnamkrigets tid och framåt. De hör till samma bredare konstruktionslinje och delar en tydlig historisk och teknisk släktskap, även om modellerna har olika roller i den amerikanska försvarshistorien. M16 blev under lång tid en välkänd amerikansk militär gevärsmodell, medan M4 senare blev en framträdande karbinmodell. Tillsammans har de fått stor internationell spridning och förekommer ofta i dokumentation om modern militärhistoria.</p>
+      <div class="details">
+        <div class="detail"><span>Geografiskt ursprung</span><strong>USA</strong></div>
+        <div class="detail"><span>Historisk period</span><strong>Från 1960-talet och framåt</strong></div>
+      </div>
+      <h3 class="model-heading">Modeller i urvalet</h3>
+      <ul class="model-list"><li class="model-entry"><details class="model-details"><summary><span class="model-summary-text"><strong>M16A1</strong><span class="model-teaser">En tidig M16-version starkt förknippad med Vietnamkriget.</span></span><span class="expand-arrow" aria-hidden="true"></span></summary><div class="model-more"><p>En tidig standardmodell som blev starkt förknippad med USA:s militära närvaro under Vietnamkriget. Den har en central plats i berättelsen om hur M16-serien etablerades och blev internationellt igenkänd.</p></div></details></li><li class="model-entry"><details class="model-details"><summary><span class="model-summary-text"><strong>M16A2</strong><span class="model-teaser">En 1980-talsversion som blev viktig under slutet av kalla kriget.</span></span><span class="expand-arrow" aria-hidden="true"></span></summary><div class="model-more"><p>En senare version som infördes under 1980-talet. Den speglar den fortsatta utvecklingen av M16-serien och blev en viktig del av amerikansk militär utrustning under slutet av kalla kriget.</p></div></details></li><li class="model-entry"><details class="model-details"><summary><span class="model-summary-text"><strong>M16A4</strong><span class="model-teaser">En senare tjänstevariant från perioden efter kalla kriget.</span></span><span class="expand-arrow" aria-hidden="true"></span></summary><div class="model-more"><p>En senare tjänstevariant som förknippas med perioden efter kalla kriget. Modellen förekommer i dokumentation om amerikanska insatser under 2000-talet och visar hur M16-namnet levde vidare in i modern tid.</p></div></details></li><li class="model-entry"><details class="model-details"><summary><span class="model-summary-text"><strong>M4</strong><span class="model-teaser">En karbinmodell med nära historisk koppling till M16-serien.</span></span><span class="expand-arrow" aria-hidden="true"></span></summary><div class="model-more"><p>En kortare karbinmodell i samma övergripande konstruktionslinje som M16. Dess historia speglar förändringar i amerikansk militär utrustning från slutet av 1900-talet och framåt.</p></div></details></li><li class="model-entry"><details class="model-details"><summary><span class="model-summary-text"><strong>M4A1</strong><span class="model-teaser">En vidareutveckling inom den moderna M4-serien.</span></span><span class="expand-arrow" aria-hidden="true"></span></summary><div class="model-more"><p>En vidareutveckling inom M4-serien som blivit en av de mest omtalade moderna amerikanska karbinmodellerna. Den förekommer ofta i officiella sammanhang, historiska översikter och populärkulturella skildringar.</p></div></details></li></ul>
+    </article>
+
+    <article class="card family-card" data-search="heckler &amp; koch-familjen g3 · hk33 · mp5 · g36 · hk416 · hk417">
+      <div class="card-top"><h2>Heckler &amp; Koch-familjen</h2><span class="tag">Familjeöversikt</span></div>
+      <p class="meta">Exempel: G3 · HK33 · MP5 · G36 · HK416 · HK417</p>
+      <p class="description">Heckler &amp; Koch, ofta förkortat H&amp;K eller HK, är en tysk vapentillverkare som grundades 1949 i dåvarande Västtyskland. Företaget har haft stor betydelse för efterkrigstidens europeiska vapentillverkning och har utvecklat flera modeller som fått internationell uppmärksamhet. Namnen G3, MP5, G36 och HK416 tillhör dock olika modellserier och kategorier. De samlas här eftersom de kommer från samma tillverkare, inte för att de utgör en enda sammanhängande vapentyp.</p>
+      <div class="details">
+        <div class="detail"><span>Geografiskt ursprung</span><strong>Västtyskland / Tyskland</strong></div>
+        <div class="detail"><span>Historisk period</span><strong>Från 1950-talet och framåt</strong></div>
+      </div>
+      <h3 class="model-heading">Modeller i urvalet</h3>
+      <ul class="model-list"><li class="model-entry"><details class="model-details"><summary><span class="model-summary-text"><strong>G3</strong><span class="model-teaser">Ett västtyskt efterkrigsgevär med stor internationell spridning.</span></span><span class="expand-arrow" aria-hidden="true"></span></summary><div class="model-more"><p>En stridsgevärsmodell som utvecklades under efterkrigstiden och antogs av Västtyskland under 1950-talet. Den exporterades till många länder och kom att få en lång historia inom internationell försvarsmateriel.</p></div></details></li><li class="model-entry"><details class="model-details"><summary><span class="model-summary-text"><strong>HK33</strong><span class="model-teaser">En HK-modell från företagets tidiga internationella sortiment.</span></span><span class="expand-arrow" aria-hidden="true"></span></summary><div class="model-more"><p>En modell som utvecklades ur samma bredare konstruktionsmiljö som G3, men som tillhör en annan kategori. Den visar hur företaget breddade sitt sortiment under 1960- och 1970-talen och sökte en internationell marknad.</p></div></details></li><li class="model-entry"><details class="model-details"><summary><span class="model-summary-text"><strong>MP5</strong><span class="model-teaser">En välkänd kulsprutepistol som ofta förknippas med polisorganisationer.</span></span><span class="expand-arrow" aria-hidden="true"></span></summary><div class="model-more"><p>En kulsprutepistol som introducerades på 1960-talet och blev särskilt välkänd genom sin förekomst hos polis- och specialförband i flera länder. Den har också fått en framträdande plats i film, tv och annan populärkultur.</p></div></details></li><li class="model-entry"><details class="model-details"><summary><span class="model-summary-text"><strong>G36</strong><span class="model-teaser">En tysk automatkarbin som antogs under 1990-talet.</span></span><span class="expand-arrow" aria-hidden="true"></span></summary><div class="model-more"><p>En automatkarbin som utvecklades under 1990-talet och antogs av den tyska försvarsmakten under mitten av årtiondet. Den blev en viktig del av Tysklands moderna försvarshistoria och har också uppmärksammats i debatter om militär materiel.</p></div></details></li><li class="model-entry"><details class="model-details"><summary><span class="model-summary-text"><strong>HK416</strong><span class="model-teaser">En modern HK-modell som fått internationell uppmärksamhet.</span></span><span class="expand-arrow" aria-hidden="true"></span></summary><div class="model-more"><p>En senare modell som utvecklades under 2000-talet och som fått internationell uppmärksamhet genom användning och upphandling i flera länder. Den visar företagets fortsatta roll på den moderna marknaden för militära handeldvapen.</p></div></details></li><li class="model-entry"><details class="model-details"><summary><span class="model-summary-text"><strong>HK417</strong><span class="model-teaser">En modell nära besläktad med HK416, men i en annan kategori.</span></span><span class="expand-arrow" aria-hidden="true"></span></summary><div class="model-more"><p>En modell som är nära besläktad med HK416 men tillhör en annan storleks- och användningskategori. Den förekommer i flera länders moderna materielöversikter och illustrerar bredden i företagets senare sortiment.</p></div></details></li></ul>
+    </article>
+
+    <article class="card family-card" data-search="pistolfamiljen glock 17 · beretta 92 · sig sauer p226 · colt m1911 · browning hi-power · walther p38">
+      <div class="card-top"><h2>Pistolfamiljen</h2><span class="tag">Familjeöversikt</span></div>
+      <p class="meta">Exempel: Glock 17 · Beretta 92 · SIG Sauer P226 · Colt M1911 · Browning Hi-Power · Walther P38</p>
+      <p class="description">Pistolfamiljen är en bred samlingskategori för handhållna skjutvapen som utvecklats av flera olika tillverkare och i olika länder. Modellerna på sidan representerar skilda epoker: från tidiga 1900-talets militära konstruktioner till senare tjänstepistoler som blivit vanliga i modern polis- och försvarshistoria. De skiljer sig åt i formgivning, historisk bakgrund och tillverkartradition. Glock är en modellserie och ett varumärke inom denna större kategori, inte en egen huvudfamilj på sidan.</p>
+      <div class="details">
+        <div class="detail"><span>Geografiskt ursprung</span><strong>Flera länder</strong></div>
+        <div class="detail"><span>Historisk period</span><strong>Från tidigt 1900-tal och framåt</strong></div>
+      </div>
+      <h3 class="model-heading">Modeller i urvalet</h3>
+      <ul class="model-list"><li class="model-entry"><details class="model-details"><summary><span class="model-summary-text"><strong>Glock 17</strong><span class="model-teaser">En österrikisk tjänstepistol som introducerades på 1980-talet.</span></span><span class="expand-arrow" aria-hidden="true"></span></summary><div class="model-more"><p>En österrikisk tjänstepistol som introducerades på 1980-talet. Den blev internationellt uppmärksammad och bidrog till att göra Glock till ett av de mest igenkända namnen inom modern pistoltillverkning.</p></div></details></li><li class="model-entry"><details class="model-details"><summary><span class="model-summary-text"><strong>Beretta 92</strong><span class="model-teaser">En italiensk tjänstepistol som blev känd som amerikanska M9.</span></span><span class="expand-arrow" aria-hidden="true"></span></summary><div class="model-more"><p>En italiensk pistolmodell från 1970-talet som senare antogs av flera organisationer och försvarsmakter. Den blev särskilt känd internationellt genom sin långa period som amerikansk tjänstepistol under beteckningen M9.</p></div></details></li><li class="model-entry"><details class="model-details"><summary><span class="model-summary-text"><strong>SIG Sauer P226</strong><span class="model-teaser">En schweizisk-tysk pistolmodell från 1980-talet.</span></span><span class="expand-arrow" aria-hidden="true"></span></summary><div class="model-more"><p>En pistolmodell med schweizisk-tysk tillverkarbakgrund som introducerades under 1980-talet. Den förekommer i historiska översikter över moderna tjänstepistoler och har haft en internationell närvaro hos olika myndigheter.</p></div></details></li><li class="model-entry"><details class="model-details"><summary><span class="model-summary-text"><strong>Colt M1911</strong><span class="model-teaser">En amerikansk pistolmodell som antogs av militären 1911.</span></span><span class="expand-arrow" aria-hidden="true"></span></summary><div class="model-more"><p>En amerikansk pistolmodell som konstruerades av John Browning och antogs av USA:s militär 1911. Den blev kvar i amerikansk militär tjänst under många årtionden och har haft ett ovanligt långt efterliv som samlar- och sporthistorisk modell.</p></div></details></li><li class="model-entry"><details class="model-details"><summary><span class="model-summary-text"><strong>Browning Hi-Power</strong><span class="model-teaser">En belgiskutvecklad modell med stor spridning under 1900-talet.</span></span><span class="expand-arrow" aria-hidden="true"></span></summary><div class="model-more"><p>En belgiskutvecklad pistolmodell som växte fram ur John Brownings konstruktionsarbete och färdigställdes av Fabrique Nationale. Den antogs av flera länder och fick stor spridning under 1900-talet, vilket gjort den betydelsefull i internationell pistolhistoria.</p></div></details></li><li class="model-entry"><details class="model-details"><summary><span class="model-summary-text"><strong>Walther P38</strong><span class="model-teaser">En tysk pistolmodell från andra världskrigets era.</span></span><span class="expand-arrow" aria-hidden="true"></span></summary><div class="model-more"><p>En tysk pistolmodell som introducerades under andra världskrigets tid och fortsatte att påverka tysk tjänstepistolutveckling efter kriget. Den är ett välkänt exempel på europeisk vapenkonstruktion från mitten av 1900-talet.</p></div></details></li></ul>
+    </article>
+  </section>
+</main>
+<footer>Vanligt förekommande vapen · Skjutvapen Repo</footer>
+<script>
+const search = document.getElementById("search");
+const cards = [...document.querySelectorAll(".card")];
+const count = document.getElementById("resultCount");
+search.addEventListener("input", () => {
+  const query = search.value.trim().toLocaleLowerCase("sv");
+  let visible = 0;
+  cards.forEach(card => {
+    const match = card.dataset.search.toLocaleLowerCase("sv").includes(query);
+    card.hidden = !match;
+    if (match) visible++;
+  });
+  count.textContent = `Visar ${visible} av ${cards.length} exempel`;
+});
+</script>
+</body>
+</html>
