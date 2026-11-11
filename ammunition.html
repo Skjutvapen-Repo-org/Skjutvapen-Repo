@@ -1,0 +1,554 @@
+
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ammunition — Skjutvapen Repo</title>
+
+<style>
+:root {
+  --bg:#0b090b;
+  --panel:#171116;
+  --panel2:#211720;
+  --ink:#eee6da;
+  --muted:#aa9da2;
+  --line:#3c2b34;
+  --gold:#b58a55;
+  --gold2:#d2b27d;
+  --red:#6e2632;
+}
+
+* { box-sizing:border-box; }
+
+body {
+  margin:0;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 50% -10%,rgba(110,38,50,.2),transparent 40rem),
+    var(--bg);
+  font-family:Georgia,"Times New Roman",serif;
+  line-height:1.65;
+}
+
+.container {
+  width:min(1100px,calc(100% - 36px));
+  margin:auto;
+}
+
+.site-header {
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(11,9,11,.95);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(12px);
+}
+
+.nav {
+  min-height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+}
+
+.brand {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:1.05rem;
+  font-weight:bold;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  text-decoration:none;
+  color:var(--ink);
+}
+
+.brand-mark {
+  width:35px;
+  height:35px;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--gold);
+  color:var(--gold2);
+  transform:rotate(45deg);
+}
+
+.brand-mark span { transform:rotate(-45deg); }
+
+.nav-links {
+  display:flex;
+  gap:24px;
+}
+
+.nav-links a {
+  color:var(--muted);
+  text-decoration:none;
+  font-size:.95rem;
+}
+
+.nav-links a:hover,
+.nav-links a[aria-current="page"] {
+  color:var(--gold2);
+}
+
+.hero {
+  text-align:center;
+  padding:75px 0 40px;
+}
+
+.eyebrow {
+  color:var(--gold2);
+  font-size:.76rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+
+h1 {
+  font-size:clamp(2.7rem,6vw,4.5rem);
+  line-height:1;
+  margin:15px 0;
+}
+
+.hero p {
+  max-width:680px;
+  margin:auto;
+  color:var(--muted);
+}
+
+.ornament {
+  color:var(--gold);
+  margin-top:24px;
+  letter-spacing:.65em;
+}
+
+.panel {
+  background:linear-gradient(145deg,var(--panel2),var(--panel));
+  border:1px solid var(--line);
+  padding:25px;
+  box-shadow:0 20px 55px rgba(0,0,0,.4);
+  margin-bottom:25px;
+}
+
+.panel-heading {
+  color:var(--gold2);
+  font-size:1.3rem;
+  font-weight:normal;
+  margin:0 0 18px;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--line);
+}
+
+label {
+  display:block;
+  color:var(--muted);
+  font-size:.8rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+
+select {
+  width:100%;
+  padding:15px;
+  background:#100c10;
+  color:var(--ink);
+  border:1px solid var(--line);
+  font:inherit;
+  cursor:pointer;
+}
+
+select:focus {
+  outline:1px solid var(--gold);
+}
+
+option {
+  background:#171116;
+}
+
+.ammo-display {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:22px;
+  margin-top:25px;
+}
+
+.ammo-card {
+  background:#0d0a0d;
+  border:1px solid var(--line);
+  padding:22px;
+}
+
+.ammo-card h2 {
+  color:var(--gold2);
+  font-weight:normal;
+  margin:0 0 10px;
+  font-size:1.5rem;
+}
+
+.ammo-card p {
+  color:var(--muted);
+  margin:0;
+}
+
+.caliber {
+  color:var(--gold2);
+  font-size:1.8rem;
+  margin:10px 0;
+}
+
+.weapon-list {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:15px;
+}
+
+.weapon-tag {
+  padding:8px 13px;
+  background:rgba(110,38,50,.2);
+  border:1px solid var(--red);
+  color:var(--ink);
+  font-size:.9rem;
+}
+
+.info-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:20px;
+}
+
+.info-box {
+  background:rgba(9,7,9,.5);
+  border:1px solid var(--line);
+  padding:15px;
+}
+
+.info-box strong {
+  display:block;
+  color:var(--gold2);
+  font-weight:normal;
+  margin-bottom:5px;
+}
+
+.info-box span {
+  color:var(--muted);
+  font-size:.9rem;
+}
+
+.catalog {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.catalog-item {
+  background:#100c10;
+  border:1px solid var(--line);
+  padding:18px;
+  cursor:pointer;
+  color:var(--ink);
+  text-align:left;
+  font:inherit;
+  transition:.2s;
+}
+
+.catalog-item:hover,
+.catalog-item.active {
+  border-color:var(--gold);
+  background:#211720;
+}
+
+.catalog-item strong {
+  display:block;
+  color:var(--gold2);
+  font-size:1.1rem;
+  font-weight:normal;
+}
+
+.catalog-item span {
+  display:block;
+  color:var(--muted);
+  font-size:.85rem;
+  margin-top:5px;
+}
+
+.note {
+  margin-top:25px;
+  padding:16px;
+  border-left:2px solid var(--red);
+  background:rgba(110,38,50,.08);
+  color:var(--muted);
+  font-size:.9rem;
+}
+
+footer {
+  margin-top:75px;
+  border-top:1px solid var(--line);
+  padding:25px;
+  text-align:center;
+  color:var(--muted);
+}
+
+[hidden] { display:none !important; }
+
+@media(max-width:700px) {
+  .nav {
+    flex-wrap:wrap;
+    padding:14px 0;
+  }
+
+  .nav-links {
+    width:100%;
+    justify-content:center;
+    gap:17px;
+    flex-wrap:wrap;
+  }
+
+  .ammo-display,
+  .catalog {
+    grid-template-columns:1fr;
+  }
+
+  .hero { padding-top:50px; }
+}
+
+@media(max-width:450px) {
+  .info-grid { grid-template-columns:1fr; }
+  .panel { padding:16px; }
+}
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="container nav">
+
+    <a class="brand" href="index.html">
+      <span class="brand-mark"><span>✦</span></span>
+      <span>Skjutvapen Repo</span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="index.html">Hem</a>
+      <a href="vapen.html">Vapen</a>
+      <a href="jamforelser.html">Jämförelser</a>
+      <a href="avfyrningsstatistik.html">Statistik</a>
+    </nav>
+
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow">Tekniskt referensarkiv</div>
+    <h1>Ammunition</h1>
+    <p>
+      Utforska ammunitionstyperna som förekommer bland vapnen
+      i katalogen. Välj en kaliber för att se dess grundläggande
+      information och vilka vapen som är förknippade med den.
+    </p>
+    <div class="ornament">✦ · ✦ · ✦</div>
+  </div>
+</section>
+
+<div class="container">
+
+<section class="panel">
+
+  <h2 class="panel-heading">Ammunitionsregister</h2>
+
+  <label for="ammoSelect">Välj ammunitionstyp</label>
+
+  <select id="ammoSelect">
+    <option value="762">7,62 × 51 mm NATO</option>
+    <option value="556">5,56 × 45 mm NATO</option>
+    <option value="545">5,45 × 39 mm</option>
+    <option value="9mm">9 × 19 mm Parabellum</option>
+  </select>
+
+  <div class="ammo-display">
+
+    <article class="ammo-card">
+      <h2 id="ammoTitle">7,62 × 51 mm NATO</h2>
+      <div class="caliber" id="ammoCaliber">7,62 mm</div>
+      <p id="ammoDescription"></p>
+
+      <div class="info-grid">
+        <div class="info-box">
+          <strong>Kaliberfamilj</strong>
+          <span id="ammoFamily"></span>
+        </div>
+
+        <div class="info-box">
+          <strong>Ammunitionstyp</strong>
+          <span id="ammoCategory"></span>
+        </div>
+
+        <div class="info-box">
+          <strong>Patronhylsa</strong>
+          <span id="ammoCase"></span>
+        </div>
+
+        <div class="info-box">
+          <strong>Referens</strong>
+          <span id="ammoReference"></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="ammo-card">
+      <h2>Vapen i katalogen</h2>
+      <p>Vapen som använder den valda kalibern enligt katalogens uppgifter.</p>
+
+      <div class="weapon-list" id="weaponList"></div>
+    </article>
+
+  </div>
+
+  <div class="note">
+    Informationen beskriver kaliberfamiljer och grundläggande
+    kategorier. En gemensam kaliber innebär inte automatiskt att
+    alla patronvarianter är kompatibla med varje vapenmodell.
+    Kontrollera alltid modellens officiella dokumentation.
+  </div>
+
+</section>
+
+<section class="panel">
+
+  <h2 class="panel-heading">Alla ammunitionstyper</h2>
+
+  <div class="catalog">
+
+    <button class="catalog-item active" data-ammo="762">
+      <strong>7,62 × 51 mm NATO</strong>
+      <span>AK-4</span>
+    </button>
+
+    <button class="catalog-item" data-ammo="556">
+      <strong>5,56 × 45 mm NATO</strong>
+      <span>AK-5 · AK-5C</span>
+    </button>
+
+    <button class="catalog-item" data-ammo="545">
+      <strong>5,45 × 39 mm</strong>
+      <span>AK-12</span>
+    </button>
+
+    <button class="catalog-item" data-ammo="9mm">
+      <strong>9 × 19 mm Parabellum</strong>
+      <span>Glock 17 · P 88</span>
+    </button>
+
+  </div>
+
+</section>
+
+</div>
+</main>
+
+<footer>
+Ammunition · Skjutvapen Repo
+</footer>
+
+<script>
+const ammunition = {
+
+  "762": {
+    title:"7,62 × 51 mm NATO",
+    caliber:"7,62 mm",
+    description:
+      "En militär standardiserad gevärspatron som förekommer i AK-4 i vapenkatalogen.",
+    family:"7,62 mm",
+    category:"Gevärsammunition",
+    casing:"Flaskformad metallhylsa",
+    reference:"NATO-standard",
+    weapons:["AK-4"]
+  },
+
+  "556": {
+    title:"5,56 × 45 mm NATO",
+    caliber:"5,56 mm",
+    description:
+      "En standardiserad gevärspatron som används av AK-5 och AK-5C i katalogen.",
+    family:"5,56 mm",
+    category:"Gevärsammunition",
+    casing:"Flaskformad metallhylsa",
+    reference:"NATO-standard",
+    weapons:["AK-5","AK-5C"]
+  },
+
+  "545": {
+    title:"5,45 × 39 mm",
+    caliber:"5,45 mm",
+    description:
+      "En gevärspatron som förekommer i AK-12 enligt vapenkatalogens uppgifter.",
+    family:"5,45 mm",
+    category:"Gevärsammunition",
+    casing:"Flaskformad metallhylsa",
+    reference:"Sovjetisk/rysk standard",
+    weapons:["AK-12"]
+  },
+
+  "9mm": {
+    title:"9 × 19 mm Parabellum",
+    caliber:"9 mm",
+    description:
+      "En vanligt förekommande pistolpatron som används av Glock 17 och P 88 i katalogen.",
+    family:"9 mm",
+    category:"Pistolammunition",
+    casing:"Rak metallhylsa",
+    reference:"Internationell standard",
+    weapons:["Glock 17","P 88"]
+  }
+
+};
+
+const select = document.getElementById("ammoSelect");
+
+function showAmmo(key) {
+
+  const ammo = ammunition[key];
+
+  document.getElementById("ammoTitle").textContent = ammo.title;
+  document.getElementById("ammoCaliber").textContent = ammo.caliber;
+  document.getElementById("ammoDescription").textContent = ammo.description;
+  document.getElementById("ammoFamily").textContent = ammo.family;
+  document.getElementById("ammoCategory").textContent = ammo.category;
+  document.getElementById("ammoCase").textContent = ammo.casing;
+  document.getElementById("ammoReference").textContent = ammo.reference;
+
+  const weaponList = document.getElementById("weaponList");
+  weaponList.replaceChildren();
+
+  ammo.weapons.forEach(weapon => {
+    const tag = document.createElement("div");
+    tag.className = "weapon-tag";
+    tag.textContent = weapon;
+    weaponList.appendChild(tag);
+  });
+
+  select.value = key;
+
+  document.querySelectorAll(".catalog-item").forEach(item => {
+    item.classList.toggle("active",item.dataset.ammo === key);
+  });
+}
+
+select.addEventListener("change", () => showAmmo(select.value));
+
+document.querySelectorAll(".catalog-item").forEach(item => {
+  item.addEventListener("click", () => showAmmo(item.dataset.ammo));
+});
+
+showAmmo("762");
+</script>
+
+</body>
+</html>
