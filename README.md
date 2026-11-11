@@ -3,3 +3,15 @@
 index.html = startsida
 
 stylesheet.css = fontstil, textstorlek, etc.
+
+
+# Uppgifter;
+
+index.html -
+
+avfyrningsstatistik.html -
+
+ammunition.html -
+
+jamforelser.html - 
+
